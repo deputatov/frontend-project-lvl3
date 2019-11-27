@@ -3,3 +3,6 @@ lint:
 
 install:
 	npm install
+
+develop:
+	npx webpack-dev-server
