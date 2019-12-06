@@ -12,18 +12,24 @@
     <div class="container">
       <h1 class="display-5">RSS</h1>
       <p class="lead">RSS feed</p>
-      <div class="row">
-        <div class="col-sm-8">
-          <div class="input-group input-group-lg">
-            <input type="text" class="form-control" aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-lg">
-          </div>
+      <hr class="my-4">
+      <form class="form-row">
+        <div class="col-12 col-md-9 col-lg-10 mt-2">
+          <input id="rss-input" class="form-control form-control-lg" placeholder="http://lorem-rss.herokuapp.com/feed"
+            type="url" name="url" autofocus>
         </div>
-        <div class="col-sm-4">
-          <a class="btn btn-primary btn-lg" href="#" role="button">Press</a>
+        <div class="col-12 col-md-3 col-lg-2 mt-2">
+          <button id="rss-subscribe" type="button" class="btn btn-primary btn-lg btn-block disabled">Subscribe</button>
         </div>
-      </div>
+      </form>
     </div>
   </div>
+  <div class="container">
+    <div class="row">
+      <div class="col12 col-md-6" id="rss-feeds"></div>
+      <div class="col12 col-md-6" id="rss-articles"></div>
+    </div>
+  </div>
+</body>
 
 </html>
