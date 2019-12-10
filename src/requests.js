@@ -1,5 +1,5 @@
 import axios from 'axios';
-import parse from './parser';
+import { parse, parseArticles } from './parser';
 import { proxy, delay } from './constants';
 
 export const makeRequest = (state) => axios
@@ -11,12 +11,12 @@ export const makeRequest = (state) => axios
   });
 
 export const makeFeedsRequests = (state) => {
-  const promise = state.feeds.map((value) => axios.get(`${proxy}${value.link}`));
-
-  Promise.all(promise)
-    .then(({ data }) => {
-      const { articles } = parse(state, data);
-      state.articles.unshift(...articles);
+  const promises = state.feeds.map((value) => axios.get(`${proxy}${value.link}`));
+  Promise.all(promises)
+    .then((contents) => {
+      contents.forEach(({ data }) => {
+        state.articles.unshift(...parseArticles(data));
+      });
     })
     .finally(() => setTimeout(() => makeFeedsRequests(state), delay));
 };
