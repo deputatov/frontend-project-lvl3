@@ -2,21 +2,23 @@ import axios from 'axios';
 import parse from './parser';
 import { proxy, delay } from './constants';
 
-export const makeRequest = (state) => axios.get(`${proxy}${state.currentURL}`).then(({ data }) => parse(state, data));
+export const makeRequest = (state) => axios
+  .get(`${proxy}${state.currentURL}`)
+  .then(({ data }) => {
+    const { feed, articles } = parse(state.currentURL, data);
+    state.feeds.push(feed);
+    state.articles.push(...articles);
+  });
 
-// export const makeFeedsRequests = (state) => {
-// };
+export const makeFeedsRequests = (state) => {
+  const promise = state.feeds.map((value) => axios.get(`${proxy}${value.link}`));
 
-// makeRequest(state.currentURL)
-// .then(() => {
-//   state.constrolState = controlStates.ending;
-//   state.currentURL = null;
-// })
-// .catch((error) => {
-//   state.controlState = controlStates.filling;
-//   state.validationState = validationStates.invalid;
-//   state.currentURL = null;
-//   throw error;
-// });
+  Promise.all(promise)
+    .then(({ data }) => {
+      const { articles } = parse(state, data);
+      state.articles.unshift(...articles);
+    })
+    .finally(() => setTimeout(() => makeFeedsRequests(state), delay));
+};
 
 export default makeRequest;

@@ -1,7 +1,7 @@
 import find from 'lodash/find';
 import isURL from 'validator/es/lib/isURL';
 import { validationStates, controlStates } from './constants';
-import { makeRequest } from './requests';
+import { makeRequest, makeFeedsRequests } from './requests';
 
 export const onInputHandler = (state) => (event) => {
   const { value } = event.target;
@@ -30,5 +30,6 @@ export const onSubscribeHandler = (state) => () => {
         state.validationState = validationStates.invalid;
         throw error;
       });
+    makeFeedsRequests(state);
   }
 };
