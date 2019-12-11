@@ -16,7 +16,6 @@ const runApplication = () => {
     currentURL: null,
     feeds: [],
     articles: [],
-    errors: [],
   };
 
   const rssInputForm = document.querySelector('#rss-input-form');
