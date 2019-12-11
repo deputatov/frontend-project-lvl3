@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import { watch } from 'melanke-watchjs';
 import { onInputHandler, onSubscribeHandler } from './handlers';
 import {
@@ -31,6 +32,13 @@ const runApplication = () => {
 
   rssInput.addEventListener('input', onInputHandler(state));
   subscribeButton.addEventListener('click', onSubscribeHandler(state));
+
+  $('#exampleModal').on('show.bs.modal', function append(evt) {
+    const button = $(evt.relatedTarget);
+    const recipient = button.data('whatever');
+    const modal = $(this);
+    modal.find('#description').text(recipient);
+  });
 };
 
 export default runApplication;

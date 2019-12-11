@@ -51,7 +51,10 @@ export const displayArticles = (state, rssArticles) => () => {
   if (state.articles.length !== 0) {
     const articlesTemplate = state
       .articles
-      .map((value) => `<li class="list-group-item"><a href="${value.link}" class="card-link">${value.title}</a></li>`)
+      .map((value) => `<li class="list-group-item d-flex align-items-center">
+        <a href="${value.link}" class="card-link">${value.title}</a>
+        <button type="button" class="btn btn-primary ml-4" data-toggle="modal" data-target="#exampleModal" data-whatever="${value.description}">View</button>
+        </li>`)
       .join('');
     rssArticles.innerHTML = `<ul class="list-group">${articlesTemplate}</ul>`;
   }
