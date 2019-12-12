@@ -1,7 +1,6 @@
-import find from 'lodash/find';
 import isURL from 'validator/es/lib/isURL';
 import { validationStates, controlStates } from './constants';
-import { makeRequest, makeFeedsRequests } from './requests';
+import { addFeed, updateArticles } from './requests';
 
 export const onInputHandler = (state) => (event) => {
   const { value } = event.target;
@@ -9,7 +8,7 @@ export const onInputHandler = (state) => (event) => {
     state.validationState = validationStates.initial;
     state.controlState = controlStates.filling;
   } else {
-    const hasDublicates = find(state.feeds, { link: value });
+    const hasDublicates = state.feeds.some((feed) => feed.link === value);
     const isValid = isURL(value) && !hasDublicates;
     state.currentURL = isValid ? value : null;
     state.validationState = isValid ? validationStates.valid : validationStates.invalid;
@@ -19,7 +18,7 @@ export const onInputHandler = (state) => (event) => {
 export const onSubscribeHandler = (state) => () => {
   if (state.validationState === validationStates.valid) {
     state.controlState = controlStates.processing;
-    makeRequest(state)
+    addFeed(state)
       .then(() => {
         state.controlState = controlStates.ending;
         state.validationState = validationStates.initial;
@@ -30,6 +29,6 @@ export const onSubscribeHandler = (state) => () => {
         state.validationState = validationStates.invalid;
         throw error;
       });
-    makeFeedsRequests(state);
+    updateArticles(state);
   }
 };
