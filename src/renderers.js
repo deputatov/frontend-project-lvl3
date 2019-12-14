@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 export const validationStateRender = (state, rssInput, subscribeButton) => () => {
   switch (state.validationState) {
     case 'initial':

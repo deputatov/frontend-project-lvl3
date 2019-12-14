@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import isURL from 'validator/es/lib/isURL';
 import { validationStates, controlStates } from './constants';
 import { addFeed, updateArticles } from './requests';
