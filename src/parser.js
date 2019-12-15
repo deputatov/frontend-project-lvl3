@@ -1,20 +1,23 @@
-export const parse = (data, onlyArticles = false) => {
+export const parse = (data) => {
   const parser = new DOMParser();
   const document = parser.parseFromString(data, 'application/xml');
-  const documentElements = [...document.querySelectorAll('item')];
+  return document;
+};
 
-  const getFeed = () => ({
+export const getFeed = (document) => {
+  const feed = {
     title: document.querySelector('title').textContent,
     description: document.querySelector('description').textContent,
-  });
+  };
+  return feed;
+};
 
-  const getArticles = () => documentElements.map((value) => ({
+export const getArticles = (document) => {
+  const documentElements = [...document.querySelectorAll('item')];
+  const articles = documentElements.map((value) => ({
     link: value.querySelector('link').textContent,
     title: value.querySelector('title').textContent,
     description: value.querySelector('description').textContent,
   }));
-
-  return onlyArticles ? { articles: getArticles() } : { feed: getFeed(), articles: getArticles() };
+  return articles;
 };
-
-export default parse;

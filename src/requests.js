@@ -1,11 +1,13 @@
 import axios from 'axios';
-import { parse } from './parser';
+import { parse, getFeed, getArticles } from './parser';
 import { proxy, delay } from './constants';
 
 export const addFeed = (state) => axios
   .get(`${proxy}${state.currentURL}`)
   .then(({ data }) => {
-    const { feed, articles } = parse(data);
+    const document = parse(data);
+    const feed = getFeed(document);
+    const articles = getArticles(document);
     feed.link = state.currentURL;
     state.feeds.push(feed);
     state.articles.push(...articles);
@@ -17,8 +19,8 @@ export const updateArticles = (state) => {
   Promise.all(promises)
     .then((contents) => {
       contents.forEach(({ data }) => {
-        const onlyArticles = true;
-        const { articles } = parse(data, onlyArticles);
+        const document = parse(data);
+        const articles = getArticles(document);
         const oldArticles = state.articles;
         const newArticles = articles
           .filter((newArticle) => !oldArticles
