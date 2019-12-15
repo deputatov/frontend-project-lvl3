@@ -16,7 +16,8 @@ export const onInputHandler = (state) => (event) => {
   }
 };
 
-export const onSubscribeHandler = (state) => () => {
+export const onSubscribeHandler = (state) => (event) => {
+  event.preventDefault();
   if (state.validationState === validationStates.valid) {
     state.controlState = controlStates.processing;
     addFeed(state)

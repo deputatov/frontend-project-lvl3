@@ -30,7 +30,7 @@ const runApplication = () => {
   watch(state, 'articles', displayArticles(state, rssArticles));
 
   rssInput.addEventListener('input', onInputHandler(state));
-  subscribeButton.addEventListener('click', onSubscribeHandler(state));
+  rssInputForm.addEventListener('submit', onSubscribeHandler(state));
 
   $('#exampleModal').on('show.bs.modal', function append(evt) {
     const button = $(evt.relatedTarget);
