@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import { watch } from 'melanke-watchjs';
-import { onInputHandler, onSubscribeHandler } from './handlers';
+import { onInputHandler, onSubmitHandler } from './handlers';
 import {
   validationStateRender,
   controlStateRender,
@@ -30,7 +30,7 @@ const runApplication = () => {
   watch(state, 'articles', displayArticles(state, rssArticles));
 
   rssInput.addEventListener('input', onInputHandler(state));
-  rssInputForm.addEventListener('submit', onSubscribeHandler(state));
+  rssInputForm.addEventListener('submit', onSubmitHandler(state));
 
   $('#exampleModal').on('show.bs.modal', function append(evt) {
     const button = $(evt.relatedTarget);

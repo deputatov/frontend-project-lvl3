@@ -16,7 +16,6 @@ export const validationStateRender = (state, rssInput, subscribeButton) => () =>
       subscribeButton.classList.add('disabled');
       break;
     default:
-      break;
   }
 };
 
@@ -24,7 +23,6 @@ export const controlStateRender = (state, rssInput, rssInputForm) => () => {
   switch (state.controlState) {
     case 'filling':
       rssInputForm.disabled = false;
-      rssInput.value = '';
       break;
     case 'processing':
       rssInputForm.disabled = true;
@@ -34,7 +32,6 @@ export const controlStateRender = (state, rssInput, rssInputForm) => () => {
       rssInput.value = '';
       break;
     default:
-      break;
   }
 };
 
