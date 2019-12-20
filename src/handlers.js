@@ -17,7 +17,7 @@ export const onInputHandler = (state) => (event) => {
 
 export const onSubmitHandler = (state) => (event) => {
   event.preventDefault();
-  if (state.validationState === validationStates.invalid) {
+  if (state.validationState !== validationStates.valid) {
     return;
   }
   state.controlState = controlStates.processing;
