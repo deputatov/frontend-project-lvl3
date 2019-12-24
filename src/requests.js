@@ -1,4 +1,6 @@
 import axios from 'axios';
+import differenceWith from 'lodash/differenceWith';
+import isEqual from 'lodash/isEqual';
 import { parse } from './parser';
 import { proxy, delay } from './constants';
 
@@ -19,9 +21,7 @@ export const updateArticles = (state) => {
       contents.forEach(({ data }) => {
         const { articles } = parse(data);
         const oldArticles = state.articles;
-        const newArticles = articles
-          .filter((newArticle) => !oldArticles
-            .some((oldArticle) => oldArticle.link === newArticle.link));
+        const newArticles = differenceWith(articles, oldArticles, isEqual);
         state.articles.unshift(...newArticles);
       });
     })
